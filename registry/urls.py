@@ -20,11 +20,11 @@ from django.urls import path
 
 urlpatterns = [
 
-    path('aircraft/', registryviews.AircraftList.as_view()),        
-    path('aircraft/<uuid:pk>', registryviews.AircraftDetail.as_view()),
-    path('operators/', registryviews.OperatorList.as_view()),
-    path('operators/<uuid:pk>', registryviews.OperatorDetail.as_view()),  
-    path('manufacturers/', registryviews.ManufacturerList.as_view()),
-    path('manufacturers/<uuid:pk>', registryviews.ManufacturerDetail.as_view()),  
+    path('aircraft/', registryviews.AircraftList.as_view(), name='aircraft-list'),
+    path('aircraft/<uuid:pk>', registryviews.AircraftDetail.as_view(), name='aircraft-detail'),
+    path('operators/', registryviews.OperatorList.as_view(), name='operator-list'),
+    path('operators/<uuid:pk>', registryviews.OperatorDetail.as_view(), name='operator-detail'),
+    path('manufacturers/', registryviews.ManufacturerList.as_view(), name='manufacturer-list'),
+    path('manufacturers/<uuid:pk>', registryviews.ManufacturerDetail.as_view(), name='manufacturer-detail'),
 
 ]
