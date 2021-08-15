@@ -240,18 +240,17 @@ class CloudFileUpload(APIView):
                 file_name = request.FILES[filename].name
             friendly_name = request.POST.get("name")            
             file_type = request.POST.get("file_type")
-            
+
             with tempfile.NamedTemporaryFile() as f:
                 for chunk in file_obj.chunks():
                     f.write(chunk)
                 f.flush()
                 
-                s3 = boto3.client('s3', region_name =env.get('S3_REGION_NAME',0), endpoint_url= endpoint_url, aws_access_key_id=env.get('S3_ACCESS_KEY',0),aws_secret_access_key=env.get('S3_SECRET_KEY',0))                
+                s3 = boto3.client('s3', region_name =env.get('S3_REGION_NAME',0), endpoint_url= endpoint_url, aws_access_key_id=env.get('S3_ACCESS_KEY',0),aws_secret_access_key=env.get('S3_SECRET_KEY',0))
                 
                 try:
-                    
                     s3.upload_fileobj(f, BUCKET_NAME, os.path.join(file_type, file_name))
-                except NoCredentialsError as ne:                                        
+                except NoCredentialsError as ne:
                     return Response({"detail":"File not uploaded, problem  with Cloud Bucket credentials"}, status=status.HTTP_400_BAD_REQUEST)
                 except Exception as e: 
                     return Response({"detail":"File not uploaded, problem  with Cloud Bucket credentials"}, status=status.HTTP_400_BAD_REQUEST)
